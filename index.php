@@ -6,4 +6,11 @@
         die("Method not allowed. Please use GET");        
     }
 
-    echo("Hello " . $_SERVER['REQUEST_METHOD'] . " at ". $_SERVER['REQUEST_URI']);
+    $url = $_SERVER['REQUEST_URI'];
+    $url = explode("?" . $_SERVER['QUERY_STRING'], $url);
+    $url = $url[0];
+
+    $paths = explode("/", $url);
+    array_shift($paths);
+    
+    include_once("./handlers/" . $paths[0] . ".php");
