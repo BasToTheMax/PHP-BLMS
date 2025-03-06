@@ -28,5 +28,7 @@
     <ul>
         {{ newBooks.forEach }}
     </ul>
+
+    <?php include_once("rpcclient.php"); ?>
 </body>
 </html>
