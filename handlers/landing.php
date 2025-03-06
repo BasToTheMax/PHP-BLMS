@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ name }}</title>
+    <title><?php echo(get_setting("site.title")); ?></title>
     <link rel="stylesheet" href="/css/v1.css">
 </head>
 <body>
@@ -16,8 +16,8 @@
         </ul>
     </nav>
     <hr />
-    <h1>{{ name }}!</h1>
-    <p>Welcome to the {{ name }}! Search and rent books!</p>
+    <h1><?php echo(get_setting("site.title")); ?>!</h1>
+    <p>Welcome to the <?php echo(get_setting("site.title")); ?>! Search and rent books!</p>
 
     <h2>Categories</h2>
     <ul>

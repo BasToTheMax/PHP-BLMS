@@ -6,4 +6,8 @@
         die("Method not allowed. Please use GET");        
     }
 
+    // Import db
+    require_once("./db.php");
+
+    // Show landing page
     include_once("./handlers/landing.php");
