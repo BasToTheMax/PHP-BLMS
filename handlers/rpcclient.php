@@ -3,10 +3,10 @@
 
 <!-- Main script -->
 <script>
-    // Send rpc calls
+//Send rpc calls
     async function rpc(method, params) {
         const res = await superagent
-            .post('/api.php')
+            .post('/api.php?' + method)
             .send({
                     jsonrpc: '2.0',
                     method,
@@ -22,7 +22,7 @@
         return res.body.result;
     }
 
-    rpc('site.ping', {}).then(r => {
+    rpc('v1.site.ping', {}).then(r => {
         console.log("Pong:", r);
     }).catch(err => {
         console.error("RPC error:", err);

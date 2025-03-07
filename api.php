@@ -46,6 +46,24 @@
         respond(false, "Invalid request", -32600);
     }
 
+   $method = $request['method'];
+
+    // var_dump($method);
+
+    if (!preg_match('/^v\d+\.[a-z0-9_]+(\.[a-z0-9_]+)*$/i', $method)) {
+        return respond(false, "Invalid method format", -32601);
+    }
+
+    $methodFile = __DIR__ . "/api/" . str_replace(".", "/", $method) . ".php";
+
+    if (!realpath($methodFile) || !str_starts_with(realpath($methodFile), __DIR__ . "/api/")) {
+        return respond(false, "Method not found: " . $methodFile, -32601);
+    }
+
+    if (!file_exists($methodFile)) {
+        return respond(false, "Method not found. (" . $methodFile . ")", -32601);
+    }
+
     function verify_params($params, $required) {
         foreach ($required as $key) {
             if (!isset($params[$key])) {
@@ -55,4 +73,9 @@
         }
     }
 
-    respond(true, "Method: " . $request['method'], $request);
+    // respond(true, "Method: " . $request['method'], $request);
+    try {
+        require_once($methodFile);
+    } catch(Exception $e) {
+      respond(false, "Internal server error", -32603);
+    } 
