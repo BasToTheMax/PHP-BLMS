@@ -48,25 +48,27 @@
 
    $method = $request['method'];
 
-    // var_dump($method);
-
     if (!preg_match('/^v\d+\.[a-z0-9_]+(\.[a-z0-9_]+)*$/i', $method)) {
         return respond(false, "Invalid method format", -32601);
     }
 
     $methodFile = __DIR__ . "/api/" . str_replace(".", "/", $method) . ".php";
 
+    // Chceck if path is a real path and if it is in the right directory
     if (!realpath($methodFile) || !str_starts_with(realpath($methodFile), __DIR__ . "/api/")) {
-        return respond(false, "Method not found: " . $methodFile, -32601);
+        return respond(false, "Method not found. (Invalid path " . $methodFile . ")", -32601);
     }
 
+    // Check if file exists
     if (!file_exists($methodFile)) {
-        return respond(false, "Method not found. (" . $methodFile . ")", -32601);
+        return respond(false, "Method not found. (No file " . $methodFile . ")", -32601);
     }
 
+    // Verify if all params exist.
     function verify_params($params, $required) {
         foreach ($required as $key) {
             if (!isset($params[$key])) {
+                // Param is missing
                 respond(false, "Invalid params. Missing " . $key, -32602);
                 die();
             }
@@ -75,7 +77,9 @@
 
     // respond(true, "Method: " . $request['method'], $request);
     try {
+        // Try to execute the method file
         require_once($methodFile);
     } catch(Exception $e) {
-      respond(false, "Internal server error", -32603);
+        // An error occurred
+        respond(false, "Internal server error", -32603);
     } 
