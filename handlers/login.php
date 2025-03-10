@@ -18,24 +18,24 @@
     <hr />
     <h1>Login at <?php echo(get_setting("site.title")); ?>!</h1>
 
-    <input type="text" id="username">
+    <input type="email" id="email">
     <input type="password" id="password">
     <button onclick="login()">Login</button>
 
     <?php include_once("rpcclient.php"); ?>
     <script>
         function login() {
-            const username = document.getElementById("username").value;
+            const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
 
-            rpc('v1.auth.login', { username, password })
+            rpc('v1.auth.login', { email, password })
                .then(r => {
                     console.log("Logged in:", r);
-                    window.location.href = "/";
+                    // window.location.href = "/";
                 })
                .catch(err => {
                     console.error("Login error:", err);
-                    alert("Invalid username or password");
+                    // alert("Invalid username or password");
                 });
         }
     </script>

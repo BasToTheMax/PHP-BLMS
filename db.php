@@ -28,3 +28,15 @@
 
         return $result['confValue'];
     }
+
+    function db_query($query, $params = [], $single = false) {
+        global $db;
+        $query = $db->prepare($query);
+        $query->execute($params);
+        if ($single == false) {
+            $result = $query->fetchAll();
+        } else {
+            $result = $query->fetch();
+        }
+        return $result;
+    }

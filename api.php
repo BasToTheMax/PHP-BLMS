@@ -81,5 +81,5 @@
         require_once($methodFile);
     } catch(Exception $e) {
         // An error occurred
-        respond(false, "Internal server error", -32603);
+        respond(false, "Internal server error: " . $e->getMessage(), -32603);
     } 
