@@ -65,9 +65,9 @@
     }
 
     // Verify if all params exist.
-    function verify_params($params, $required) {
+    function verify_params($request, $required) {
         foreach ($required as $key) {
-            if (!isset($params[$key])) {
+            if (!isset($request['params'][$key])) {
                 // Param is missing
                 respond(false, "Invalid params. Missing " . $key, -32602);
                 die();
